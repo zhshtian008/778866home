@@ -2,17 +2,63 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我的个人主页</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
         body {
+            background: linear-gradient(135deg, #e0f7ff, #f0e8ff);
+            min-height: 100vh;
             text-align: center;
-            background: #f0f8ff;
-            font-family: 微软雅黑;
+            padding: 80px 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.75);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #264b96;
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+        .subtitle {
+            color: #555;
+            font-size: 17px;
+            margin-bottom: 30px;
+        }
+        .info p {
+            font-size: 16px;
+            color: #333;
+            line-height: 2;
+        }
+        .footer {
+            margin-top: 35px;
+            font-size: 14px;
+            color: #777;
         }
     </style>
 </head>
 <body>
-    <h1>欢迎来到我的网站</h1>
-    <p>简易个人主页 · GitHub静态网站</p>
+    <div class="container">
+        <h1>欢迎来到我的个人主页</h1>
+        <p class="subtitle">GitHub Pages 静态网站</p>
+        <div class="info">
+            <p>你可以在这里介绍自己、留下信息</p>
+            <p>这是我亲手搭建的第一个网站 ✨</p>
+            <p>持续更新中...</p>
+        </div>
+        <div class="footer">
+            © 2026 我的主页
+        </div>
+    </div>
 </body>
 </html>
