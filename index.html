@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的个人主页</title>
+    <title>全国城市图库</title>
     <style>
         * {
             margin: 0;
@@ -12,53 +12,155 @@
             font-family: "Microsoft Yahei", sans-serif;
         }
         body {
-            background: linear-gradient(135deg, #e0f7ff, #f0e8ff);
-            min-height: 100vh;
-            text-align: center;
-            padding: 80px 20px;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: rgba(255,255,255,0.75);
-            border-radius: 20px;
-            padding: 40px 30px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            background: #f7f9fc;
+            padding: 20px;
         }
         h1 {
-            color: #264b96;
-            font-size: 32px;
-            margin-bottom: 16px;
+            text-align: center;
+            margin-bottom: 25px;
+            color: #224477;
         }
-        .subtitle {
-            color: #555;
-            font-size: 17px;
+        /* 城市按钮容器 - 可滚动，容纳大量城市 */
+        .city-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
             margin-bottom: 30px;
+            padding-bottom: 10px;
+            justify-content: center;
         }
-        .info p {
+        .city-nav button {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            background: #4078c0;
+            color: #fff;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        .city-nav button:hover {
+            background: #2d5899;
+        }
+        .city-nav button.active {
+            background: #1a3d66;
+        }
+        /* 城市详情卡片 */
+        .city-card {
+            max-width: 750px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+        }
+        .city-card img {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .city-card h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: #222;
+        }
+        .city-card p {
             font-size: 16px;
-            color: #333;
-            line-height: 2;
-        }
-        .footer {
-            margin-top: 35px;
-            font-size: 14px;
-            color: #777;
+            line-height: 1.8;
+            color: #444;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>欢迎来到我的个人主页</h1>
-        <p class="subtitle">GitHub Pages 静态网站</p>
-        <div class="info">
-            <p>你可以在这里介绍自己、留下信息</p>
-            <p>这是我亲手搭建的第一个网站 ✨</p>
-            <p>持续更新中...</p>
-        </div>
-        <div class="footer">
-            © 2026 我的主页
-        </div>
-    </div>
+    <h1>全国城市风景图库</h1>
+
+    <!-- 城市按钮导航 -->
+    <div class="city-nav" id="cityNav"></div>
+
+    <!-- 城市详情展示区 -->
+    <div class="city-card" id="cityView"></div>
+
+    <script>
+        // ========== 城市数据库（可以无限在这里新增城市！==========
+        const cityData = [
+            {
+                id: "beijing",
+                name: "北京",
+                img: "https://img0.baidu.com/it/u=1297211612,3829152031&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
+                desc: "北京是中国首都，历史文化名城，拥有故宫、长城、天坛等著名古迹，兼具千年底蕴与现代都市风貌。"
+            },
+            {
+                id: "shanghai",
+                name: "上海",
+                img: "https://img0.baidu.com/it/u=266607778,1599245713&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
+                desc: "上海是国际化大都市，外滩、陆家嘴是标志性景观，是我国经济、金融和航运中心。"
+            },
+            {
+                id: "hangzhou",
+                name: "杭州",
+                img: "https://img2.baidu.com/it/u=2728789320,3320713903&fm=253&fmt=auto&app=120&f=JPEG?w=800&h=500",
+                desc: "杭州素有“人间天堂”美誉，西湖是核心景点，风景秀丽，也是互联网产业发达的城市。"
+            },
+            {
+                id: "chengdu",
+                name: "成都",
+                img: "https://img0.baidu.com/it/u=179022278,3789200703&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
+                desc: "成都别称蓉城，国宝大熊猫栖息地，美食众多，生活节奏悠闲，是巴蜀文化核心城市。"
+            },
+            {
+                id: "xian",
+                name: "西安",
+                img: "https://img2.baidu.com/it/u=3803477927,3265121197&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
+                desc: "西安是十三朝古都，拥有兵马俑、大雁塔、古城墙，中华文明重要发源地之一。"
+            },
+            {
+                id: "nanjing",
+                name: "南京",
+                img: "https://img2.baidu.com/it/u=3127350387,3909729373&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
+                desc: "南京古称金陵，六朝古都，秦淮河、中山陵是代表景点，历史底蕴深厚。"
+            },
+            {
+                id: "guangzhou",
+                name: "广州",
+                img: "https://img2.baidu.com/it/u=3671771397,2797771117&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
+                desc: "广州别称羊城，岭南文化中心，商贸发达，广州塔是地标建筑，粤菜闻名全国。"
+            },
+            {
+                id: "shenzhen",
+                name: "深圳",
+                img: "https://img1.baidu.com/it/u=228695330,1995715190&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
+                desc: "深圳是现代化科创城市，由渔村发展为超级都市，地标平安大厦、市民中心。"
+            }
+            // ✅ 格式模板（直接复制增加更多城市）
+            // ,{
+            //     id: "城市id",
+            //     name: "城市名称",
+            //     img: "图片直链url",
+            //     desc: "城市介绍文字"
+            // }
+        ];
+
+        // 渲染城市按钮
+        const nav = document.getElementById('cityNav');
+        const view = document.getElementById('cityView');
+
+        cityData.forEach(city => {
+            const btn = document.createElement('button');
+            btn.innerText = city.name;
+            btn.onclick = () => showCity(city);
+            nav.appendChild(btn);
+        });
+
+        // 显示城市详情
+        function showCity(city) {
+            view.innerHTML = 
+                <img src="${city.img}" alt="${city.name}风景">
+                <h2>${city.name}</h2>
+                <p>${city.desc}</p>
+            ;
+        }
+
+        // 默认打开第一个城市
+        showCity(cityData[0]);
+    </script>
 </body>
 </html>
